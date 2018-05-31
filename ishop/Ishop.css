@@ -1,0 +1,29 @@
+﻿.Ishop
+{
+ 
+  margin: 20px;
+}
+
+.Ishop .Item{
+  height: 150px;
+  margin: 10px;
+}
+
+.Ishop .ItemImage{
+  max-width: 150px;
+  max-height: 150px;
+  float:left;
+
+}
+
+
+.Ishop .ItemGroup{
+  margin-left: 20px;
+}
+.Ishop .ItemGroup .ItemDescription{
+  display: inline-block;
+}
+.Ishop .ItemGroup .price{
+  float: right;
+  width: 100px;
+}
