@@ -17,7 +17,7 @@ var ItemForm=React.createClass({
                 React.DOM.img({src:this.props.item.imgURL})
             ),
             React.DOM.div({className:'Field ItemURL'},
-                React.DOM.label(null,'URL фото',
+                React.DOM.label(null,'URL фото: ',
                     React.DOM.input({type:'text'})
                 ),
                 React.DOM.span({className:'ErrorText'},'Неправильно введен')
@@ -29,7 +29,7 @@ var ItemForm=React.createClass({
                 React.DOM.span({className:'ErrorText'},'Неправильно введен')
             ),
             React.DOM.div({className:'Field Description',},
-                React.DOM.label(null,'Описание товара:',
+                React.DOM.label(null,'Описание товара: ',
                     React.DOM.textarea({rows:'10',cols:'30'})
                 ),
                 React.DOM.span({className:'ErrorText'},'Неправильно введен')

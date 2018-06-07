@@ -11,7 +11,7 @@ var FilterBlock=React.createClass({
     getInitialState: function() {
         return { 
             stringArr: this.props.stringArr.slice(), 
-            stringArrSort: this.props.stringArr.sort(),
+            stringArrSort: this.props.stringArr.slice().sort(),
             sortStaus:false,
             workArr:this.props.stringArr,
             dispArr:this.props.stringArr,
@@ -19,7 +19,6 @@ var FilterBlock=React.createClass({
         };
       },
    
-
     //функция формирующая массив строк с вхождением части строки
     createSubArrayStrings: function(origArr,subStr){
         return origArr.filter(value=>{
@@ -30,16 +29,14 @@ var FilterBlock=React.createClass({
     },
     //изменение checkbox
     sortChange:function(EO){
-        this.setState( {sortStaus:this.state.sortStaus?false:true});
-        if (!this.state.sortStaus){
-            this.setState({workArr:this.state.stringArrSort});
-            this.setState({dispArr:this.createSubArrayStrings(this.state.stringArrSort,this.state.subStr)});
-            //console.log('С сортировкой');
-        }
-        else {
+        if (this.state.sortStaus){
             this.setState({workArr:this.state.stringArr});
             this.setState({dispArr:this.createSubArrayStrings(this.state.stringArr,this.state.subStr)});
-            //console.log('Без сортировки');
+        }
+        else {
+           
+            this.setState({workArr:this.state.stringArrSort});
+            this.setState({dispArr:this.createSubArrayStrings(this.state.stringArrSort,this.state.subStr)});
         }
         this.setState( {sortStaus:this.state.sortStaus?false:true});
     },
