@@ -1,0 +1,41 @@
+.Item.Active{
+    background: rgb(109, 142, 180);
+}
+
+.Item{
+    background: rgb(247, 182, 85);
+    padding: 10px;
+}
+
+.Item .ItemGroup {
+    margin-left: 20px;
+}
+.Item{
+    height: 150px;
+    margin: 10px;
+  }
+  
+.Item .ItemImage{
+    max-width: 150px;
+    max-height: 150px;
+    float:left;
+}
+  
+  
+.ItemGroup{
+  margin-left: 20px;
+}
+
+.ItemGroup .ItemDescription{
+    display: inline-block;
+}
+
+.ItemGroup .price{
+    float: right;
+    width: 100px;
+}
+
+
+q:before,q:after {
+	content:'';
+}

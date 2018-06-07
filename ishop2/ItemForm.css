@@ -1,0 +1,18 @@
+.ItemForm .Field{
+    margin: 15px 0px 15px 0px;
+    width: 600px;
+    text-align: right;   
+}
+
+.ItemForm .Field label{
+    width: 450px;  
+    display: inline-block;
+}
+
+.ItemForm .Field input{
+    width: 300px;  
+}
+
+.ItemForm .Field textarea{
+    width: 300px;  
+}

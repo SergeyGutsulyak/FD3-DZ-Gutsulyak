@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta charset="utf-8" />
+  <title>ДЗ filter Гуцуляк</title>
+</head> 
+<body> 
+  <div id="container"></div> 
+      
+  <script src="https://unpkg.com/react@15/dist/react.js"></script> 
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> 
+      
+  <script src="StringsList.js"></script>
+  <link rel="stylesheet" type="text/css" href="StringsList.css" />
+
+  <script src="FilterBlock.js"></script>
+  <link rel="stylesheet" type="text/css" href="FilterBlock.css" />
+
+  <script>
+    var stringArr=[
+      'sadfdssaf',
+      'gdfsgg',
+      '1324fsdgds',
+      'фыадфыав',
+      'ааыфва',
+      'fasdfdsfa',
+      'asdfhf',
+      'sdfgdsfg',
+      'ипапрар',
+      'sgdfпа',
+      'аsdfetnва',
+      '5рапрапa',
+      'aыврвывап',
+      'sdафыфsfg',
+      'иеперпрар',
+      'афваыфпа',
+      ];
+
+  ReactDOM.render(React.createElement(FilterBlock,{stringArr:stringArr}),
+  document.getElementById('container'));
+
+  </script>
+
+</body> 
+</html>

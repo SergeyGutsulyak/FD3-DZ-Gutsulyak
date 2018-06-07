@@ -1,0 +1,9 @@
+.StringList{
+    overflow-y: scroll;
+    width: 150px;
+    height: 200px;
+}
+
+.StringList li{
+    list-style-type: none;
+}
