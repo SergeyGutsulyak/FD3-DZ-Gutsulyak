@@ -1,46 +1,88 @@
 ﻿var Ishop2 = React.createClass({
 
-  displayName: 'Ishop',
+  displayName: 'Ishop2',
 
   getInitialState: function() {
     return { 
        curItemsArr:this.props.itemsArr,
        selectCode:0,
        curItem:null,
+      // lockEdit:false,
       };
   },
   //поиск позиции в массиве товаров по cod
   findItem:function(cod){
-    var citm=null;
+    //console.log('Вызывается поиск');
     for(i in this.state.curItemsArr){
-      if (this.state.curItemsArr[i].code==cod) return this.state.curItemsArr[i];
+      if (this.state.curItemsArr[i].code==cod) return {el:this.state.curItemsArr[i],index:i};
     }
+    console.log('Не найден');
+    return null;
   },
 
   deleteItem:function(cod){
-    this.state.curItemsArr.splice(this.findItem(this.state.curItemsArr,cod),1);
-    this.setState({curItemsArr:this.state.curItemsArr});
-    console.log(cod);
+    var fObj=this.findItem(cod); 
+    this.state.curItemsArr.splice(fObj.index,1);
+    this.setState({curItemsArr:this.state.curItemsArr,curItem:null});
+    //console.log(cod);
   },
   selectItem:function(cod){
-    this.setState({selectCode:cod,curItem:this.findItem(cod)});
+    var fObj=this.findItem(cod);
+    //сначала закрываем, потом снова создаем, чтобы обнавились defaultValue
+    this.setState({curItem:null},()=>this.setState({selectCode:cod,curItem:fObj.el,lockEdit:true}));
+  },
+  selectChItem:function(cod){
+
+    var fObj=this.findItem(cod);
+    //сначала закрываем, потом снова создаем, чтобы обнавились defaultValue
+    this.setState({curItem:null},()=>this.setState({selectCode:cod,curItem:fObj.el,lockEdit:false}));
+    console.log('Изменение разрешено');
+  },
+//обработчик нажатия кнопки добавить
+  addedItem:function(EO){
+    //поиск максимального значение кода, новый код максимум старый +1
+    var newCode=Math.max(this.state.curItemsArr.reduce((e,v)=>{return Math.max(v.code,e)},0))+1;
+    //this.setState({selectCode:newCode});
+    //создание пустого товара
+    var newI= {title:'',description:'',price:0,imgURL:'images/frs1.jpg', count:0, code:newCode};
+    this.setState({curItem:null},()=>this.setState({selectCode:newCode,curItem:newI}));
   },
 
-  addItem:function(item){
+  addItem:function(){
 
   },
 
-  changeItem:function(cod){
-
+  changeItem:function(newI){
+    //console.log(item);
+    //console.log(this.state.curItemsArr);
+    var fObj=this.findItem(newI.item.code);
+    console.log(fObj)
+    if (fObj){ 
+      this.state.curItemsArr[fObj.index]=newI.item;
+      this.setState({curItemsArr:this.state.curItemsArr});
+    }
+    else{
+      this.state.curItemsArr.push(newI.item);
+      this.setState({curItemsArr:this.state.curItemsArr});
+    }
   },
 
+  closeForm:function(){
+    this.setState({curItem:null})
+  },
+  
   render: function() {
     //console.log('Рендер');
      
-    var curItemCode=null;
+    var curItemForm=null;
     if (this.state.curItem){
-      curItemCode=React.createElement(ItemForm,{item:this.state.curItem});
-      //console.log(this.state.curItem);
+      //console.log(this.state.curItem)
+      curItemForm=React.createElement(ItemForm,
+        {item:this.state.curItem,
+         cbChangeItem:this.changeItem,
+         cbCloseForm:this.closeForm,
+         lockEdit:this.state.lockEdit});
+         console.log(this.state.lockEdit);
     }
 
     var itemsCode=[];
@@ -53,14 +95,15 @@
         React.createElement(Item,{key:itemEl.code,selected:selIt,item:itemEl,
           cbDeleteItem:this.deleteItem,
           cbSelectItem:this.selectItem,
+          cbSelectChItem:this.selectChItem,
         });
       itemsCode.push(itemCode);
     });
 
     return React.DOM.div( {className:'Ishop2'},
      React.DOM.h1( {className:'Category'}, this.props.category), 
-     React.DOM.div( {className:'ItemsContainer'}, itemsCode),
-     React.DOM.div( {className:'ItemsConf'}, curItemCode),
+     React.DOM.div( {className:'ItemsContainer'}, itemsCode,React.DOM.input({className:'ButtonAdd',type:'button',value:'Добавить',onClick:this.addedItem})),
+     curItemForm,
     );
   },
 

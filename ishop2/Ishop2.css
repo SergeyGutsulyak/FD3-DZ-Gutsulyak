@@ -1,9 +1,13 @@
 ﻿.Ishop2
 {
- 
   margin: 20px;
+  
 }
-
+.Ishop2 .ItemsContainer{
+  width: 900px;
+  float: left;
+  display: block;
+}
 .Ishop2 .Item{
   height: 150px;
   margin: 10px;
@@ -25,5 +29,5 @@
 }
 .Ishop2 .ItemGroup .price{
   float: right;
-  width: 100px;
+  width: 80px;
 }

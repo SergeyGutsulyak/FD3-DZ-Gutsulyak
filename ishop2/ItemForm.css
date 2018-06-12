@@ -1,6 +1,11 @@
+.ItemForm{
+    width: 450px;
+    float: left;
+    display: block;
+}
 .ItemForm .Field{
     margin: 15px 0px 15px 0px;
-    width: 600px;
+    width: 400px;
     text-align: right;   
 }
 
@@ -15,4 +20,16 @@
 
 .ItemForm .Field textarea{
     width: 300px;  
+}
+
+.ItemForm .Field .ErrorText{
+    width: 250px;
+    color: rgb(245, 8, 8);
+    display: inline-block; 
+    text-align: left;
+}
+
+.ItemForm img{
+    max-width: 150px;
+    max-height: 150px;
 }

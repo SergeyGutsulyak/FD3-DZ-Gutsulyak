@@ -12,18 +12,24 @@ var Item=React.createClass({
         }),
     cbDeleteItem:React.PropTypes.func.isRequired,
     cbSelectItem:React.PropTypes.func.isRequired,
+    cbSelectChItem:React.PropTypes.func.isRequired,
     selected:React.PropTypes.bool.isRequired,
     },
-    changeItem:function(){
-        
+    selectChItem:function(EO){
+        this.props.cbSelectChItem(this.props.item.code);
+        EO.stopPropagation();
     },
     deleteItem:function(EO){
-        this.props.cbDeleteItem(this.props.item.code);
+        if (confirm('Удалть элемент?')){
+            this.props.cbDeleteItem(this.props.item.code);
+            EO.stopPropagation();
+        }
     },
 
     selectIem:function(){
         this.props.cbSelectItem(this.props.item.code); 
     },
+    
     render: function(){
         var strClass='';
         if (this.props.selected) strClass=' Active';
@@ -34,7 +40,7 @@ var Item=React.createClass({
           React.DOM.h2({className:'ItemTitle'},this.props.item.title),
           React.DOM.p({className:'dDescriptonText'},this.props.item.description),
           React.DOM.p({className:'count'},'В наличии: '+this.props.item.count),
-          React.DOM.input({type:'button',value:'Изменить',onClick:this.changeItem}),
+          React.DOM.input({type:'button',value:'Изменить',onClick:this.selectChItem}),
           React.DOM.input({type:'button',value:'Удалить',onClick:this.deleteItem}),
           ),
         React.DOM.div({className:'price'},this.props.item.price+' р')
