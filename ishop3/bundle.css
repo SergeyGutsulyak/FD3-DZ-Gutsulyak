@@ -1,0 +1,109 @@
+.Ishop2
+{
+  margin: 20px;
+  
+}
+.Ishop2 .ItemsContainer{
+  width: 900px;
+  float: left;
+  display: block;
+}
+.Ishop2 .Item{
+  height: 150px;
+  margin: 10px;
+}
+
+.Ishop2 .ItemImage{
+  max-width: 150px;
+  max-height: 150px;
+  float:left;
+
+}
+
+
+.Ishop2 .ItemGroup{
+  margin-left: 20px;
+}
+.Ishop2 .ItemGroup .ItemDescription{
+  display: inline-block;
+}
+.Ishop2 .ItemGroup .price{
+  float: right;
+  width: 80px;
+}
+.Item.Active{
+    background: rgb(109, 142, 180);
+}
+
+.Item{
+    background: rgb(247, 182, 85);
+    padding: 10px;
+}
+
+.Item .ItemGroup {
+    margin-left: 20px;
+}
+.Item{
+    height: 150px;
+    margin: 10px;
+  }
+  
+.Item .ItemImage{
+    max-width: 150px;
+    max-height: 150px;
+    float:left;
+}
+  
+  
+.ItemGroup{
+  margin-left: 20px;
+}
+
+.ItemGroup .ItemDescription{
+    display: inline-block;
+}
+
+.ItemGroup .price{
+    float: right;
+    width: 100px;
+}
+
+
+q:before,q:after {
+	content:'';
+}.ItemForm{
+    width: 450px;
+    float: left;
+    display: block;
+}
+.ItemForm .Field{
+    margin: 15px 0px 15px 0px;
+    width: 400px;
+    text-align: right;   
+}
+
+.ItemForm .Field label{
+    width: 450px;  
+    display: inline-block;
+}
+
+.ItemForm .Field input{
+    width: 300px;  
+}
+
+.ItemForm .Field textarea{
+    width: 300px;  
+}
+
+.ItemForm .Field .ErrorText{
+    width: 250px;
+    color: rgb(245, 8, 8);
+    display: inline-block; 
+    text-align: left;
+}
+
+.ItemForm img{
+    max-width: 150px;
+    max-height: 150px;
+}
+/*# sourceMappingURL=bundle.css.map*/
