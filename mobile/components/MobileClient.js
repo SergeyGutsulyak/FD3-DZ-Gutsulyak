@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {clientMode_change, clientData_save} from '../redux/clientsAC';
+import {clientMode_change, clientData_save, client_delete} from '../redux/clientsAC';
 
 import './MobileClient.css';
 
@@ -74,6 +74,9 @@ class MobileClient extends React.PureComponent {
     this.props.dispatch(clientData_save(this.props.client.data.id,fam,name,otch,balance));
 
   }
+  deleteClient=()=>{
+    this.props.dispatch(client_delete(this.props.client.data.id));
+  }
   render() {
 
     console.log("MobileClient id="+this.props.client.data.id+this.props.client.data.fam+" render");
@@ -87,6 +90,7 @@ class MobileClient extends React.PureComponent {
             <input
               type='button'
               value='Удалить'
+              onClick={this.deleteClient}
             />
             <input
               type='button'

@@ -1,5 +1,5 @@
 ﻿import { CLIENT_MODE_CHANGE,  CLIENT_DATA_SAVE,CLIENT_DELETE, 
-  CLIENT_ADD, CLIENT_FILTER, CLIENT_ADD_ARRAY } from './clientsAC';
+  CLIENT_ADD, CLIENT_FILTER_BLOCK, CLIENT_FILTER_ALL, CLIENT_FILTER_ACTIVE, CLIENT_ADD_ARRAY } from './clientsAC';
 
 const initState={
 
@@ -13,17 +13,17 @@ const initState={
 // за который отвечает данный редьюсер
 
 function clientsReducer(state=initState,action) {
-  console.log("Редьюсер");
-  console.log('Тип действия:'+action.type);
+  //console.log("Редьюсер");
+  //console.log('Тип действия:'+action.type);
   switch (action.type) {
     case CLIENT_ADD_ARRAY:{
-      console.log(CLIENT_ADD_ARRAY);
+      //console.log(CLIENT_ADD_ARRAY);
       let clientHash={};
       for (var numEl in action.clientArr) {
         let element=action.clientArr[numEl];
         clientHash[element.id]={data:element,mode:{canEdit:false}};
       }
-    console.log(clientHash);
+    //console.log(clientHash);
     let newState={
         all:{...clientHash},//все клиенты
         crop:{...clientHash},//отображаемые клиенты
@@ -54,20 +54,60 @@ function clientsReducer(state=initState,action) {
       
       return newState;
     }
-    case CLIENT_FILTER: {
-      console.log(CLIENT_FILTER);
-      // надо создать новый счётчик
-      // редьюсер ВСЕГДА должен возвращаеть новый state а не изменять старый!
-      //console.log('action:',action);
-      //console.log('state до обработки редьюсером:',state);
-      let newState={...state, clients:{
-        all:[...state.clients.all],
-        crop:[...state.clients.crop]}
+
+    case CLIENT_DELETE:{
+      
+      let newState={...state};
+
+      //console.log(newState)
+      delete newState.all[action.clientId];
+      delete newState.crop[action.clientId];
+      return newState;
+    }
+    case CLIENT_FILTER_ACTIVE: {
+      //console.log(CLIENT_FILTER);
+
+      let newState={...state}
+      newState.crop={};
+      for (var keyEl in newState.all){
+        let client=newState.all[keyEl];
+        //console.log(client);
+        //console.log(client.balance);
+        if (client.data.balance>0){
+          newState.crop[keyEl]=client;
+        }
       }
-      //console.log('state после обработки редьюсером:',newState);
       return newState;
     };
     
+    case CLIENT_FILTER_BLOCK: {
+      //console.log(CLIENT_FILTER);
+
+      let newState={...state}
+      newState.crop={};
+      for (keyEl in newState.all){
+        let client=newState.all[keyEl];
+        //console.log(client.balance);
+        if (client.data.balance<=0){
+          newState.crop[keyEl]=client;
+        }
+      }
+      return newState;
+    };
+
+    case CLIENT_FILTER_ALL: {
+      //console.log(CLIENT_FILTER);
+
+      let newState={...state};
+      newState.crop={...newState.all};
+      return newState;
+    };
+
+    case CLIENT_ADD:{
+      let newState={...state};
+      newState.crop[action.newId]={data:{id:action.newId,fam:"",im:"",otch:"",balance:0},mode:{canEdit:true}};
+      return newState;
+    }
     default:
       return state;
   }

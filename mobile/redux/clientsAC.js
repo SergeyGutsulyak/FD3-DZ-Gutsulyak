@@ -2,7 +2,9 @@
 const CLIENT_DATA_SAVE='CLIENT_DATA_SAVE';
 const CLIENT_DELETE='CLIENT_DELETE';
 const CLIENT_ADD='CLIENT_ADD';
-const CLIENT_FILTER='CLIENT_FILTER';
+const CLIENT_FILTER_BLOCK='CLIENT_FILTER_BLOCK';
+const CLIENT_FILTER_ALL='CLIENT_FILTER_ALL';
+const CLIENT_FILTER_ACTIVE='CLIENT_FILTER_ACTIVE';
 const CLIENT_ADD_ARRAY='CLIENT_ADD_ARRAY';
 
 const clientMode_change=function(clientId,mode) {
@@ -31,16 +33,28 @@ const client_delete=function(clientId) {
   };
 }
 
-const client_add=function(typeFilter) {
+const client_filter_block=function() {
   return {
-    type: CLIENT_FILTER,
-    typeFilter:typeFilter,
+    type: CLIENT_FILTER_BLOCK,
   };
 }
 
-const client_filter=function() {
+const client_filter_all=function() {
+  return {
+    type: CLIENT_FILTER_ALL,
+  };
+}
+
+const client_filter_active=function() {
+  return {
+    type: CLIENT_FILTER_ACTIVE,
+  };
+}
+
+const client_add=function(newId) {
   return {
     type: CLIENT_ADD,
+    newId:newId,
   };
 }
 
@@ -56,6 +70,8 @@ export {
   clientData_save, CLIENT_DATA_SAVE,
   client_delete, CLIENT_DELETE,
   client_add, CLIENT_ADD,
-  client_filter,CLIENT_FILTER,
+  client_filter_block,CLIENT_FILTER_BLOCK,
+  client_filter_all,CLIENT_FILTER_ALL,
+  client_filter_active,CLIENT_FILTER_ACTIVE,
   client_add_array,CLIENT_ADD_ARRAY,
 }

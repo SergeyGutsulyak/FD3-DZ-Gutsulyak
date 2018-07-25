@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {client_add_array} from '../redux/clientsAC';
+import {client_add_array,client_filter_block,client_filter_all,client_filter_active,client_add} from '../redux/clientsAC';
 import MobileClient from './MobileClient';
 
 import './MobileCompany.css';
@@ -20,55 +20,36 @@ class MobileCompany extends React.PureComponent {
       })
     ),
   };
-
-  state = {
-    name: this.props.name,
-    clients: this.props.clients,
-  };
 */
- /* setName1 = () => {
-    this.setState({name:'МТС'});
-  };
-
-  setName2 = () => {
-    this.setState({name:'Velcom'});
-  };
-  
-  setBalance = (clientId,newBalance) => {
-    let changed=false;
-    let newClients=[...this.state.clients]; // копия самого массива клиентов
-    newClients.forEach( (c,i) => {
-      if ( c.id==clientId && c.balance!=newBalance ) {
-        let newClient={...c}; // копия хэша изменившегося клиента
-        newClient.balance=newBalance;
-        newClients[i]=newClient;
-        changed=true;
-      }
-    } );
-    if ( changed )
-      this.setState({clients:newClients});
-  };
-  
-  setBalance1 = () => {
-    this.setBalance(105,230);
-  };
-
-  setBalance2 = () => {
-    this.setBalance(105,250);
-  };
-  */
-
+ 
  componentWillMount(){
    console.log('Событие componentWillMount');
     this.props.dispatch(client_add_array(this.props.clientsMobile));
  }
+filtrAll=()=>{
+  this.props.dispatch(client_filter_all());
+}
 
+filtrBlock=()=>{
+  this.props.dispatch(client_filter_block());
+}
 
+filtrActive=()=>{
+  this.props.dispatch(client_filter_active());
+}
+
+addClient=()=>{
+  //console.log(this.props.clients.all)
+  let newKey=Math.max(...Object.keys(this.props.clients.all))+1;
+    console.log(newKey)
+  //console.log(Object.keys(String(newKey)));
+  this.props.dispatch(client_add(String(newKey)));
+}
   render() {
 
     console.log("MobileCompany render");
     //console.log(this.state);
-    console.log(this.props);
+    //console.log(this.props);
     
     var clientsCode=[];
     var clientsHash=this.props.clients.crop;
@@ -87,10 +68,10 @@ class MobileCompany extends React.PureComponent {
         <div className='MobileCompanyClients'>
           {clientsCode} 
         </div>
-        <input type="button" value="Добавить" />
-        <input type="button" value="Все" />
-        <input type="button" value="Заблокированные" />
-        <input type="button" value="Активные" />
+        <input type="button" value="Добавить" onClick={this.addClient}/>
+        <input type="button" value="Все" onClick={this.filtrAll}/>
+        <input type="button" value="Заблокированные" onClick={this.filtrBlock} />
+        <input type="button" value="Активные" onClick={this.filtrActive}/>
       </div>
     );
 
@@ -99,7 +80,7 @@ class MobileCompany extends React.PureComponent {
 }
 
 const mapStateToProps = function (state) {
-  console.log(state);
+  //console.log(state);
   return {
     
     // весь раздел Redux state под именем counters будет доступен
