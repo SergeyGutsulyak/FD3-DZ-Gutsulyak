@@ -3,9 +3,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MobileCompany from './components/MobileCompany';
+import MainPage from './core/MainPage';
 
-let companyName='Velcom';
+//let companyName='Velcom';
 let clientsArr=[ 
   {id:101, fam:"Иванов", im:"Иван", otch:"Иванович", balance:200}, 
   {id:105, fam:"Сидоров", im:"Сидор", otch:"Сидорович", balance:250}, 
@@ -14,10 +14,6 @@ let clientsArr=[
 ];
 
 ReactDOM.render(
-  <MobileCompany 
-    name={companyName}
-    clients={clientsArr}
-  />
+  <MainPage />
   , document.getElementById('container') 
 );
-
