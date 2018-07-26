@@ -52,13 +52,13 @@ class Scales{
 
     getSumScale():number{
         let sumScale:number;
-        sumScale=this.arrayProduct.reduce((curSum:number,el:Product)=>{return curSum+el.getScale()},0);
+        sumScale=this.arrayProduct.reduce((curSum:number,el:Product):number=>{return curSum+el.getScale()},0);
         return sumScale;
     }
 
     getNameList():string[]{
         let nameList:string[];
-        nameList=this.arrayProduct.map((el)=>{return el.name});
+        nameList=this.arrayProduct.map((el:Product):string=>{return el.name});
         return nameList;
 
     }
