@@ -1,0 +1,21 @@
+.userVK{
+    border: 1px #39a8db;
+    border-radius:10px;
+    margin: 7px;
+    
+    
+}
+
+.userVK .userPhoto{
+    width: 100px;
+    float: left;
+}
+
+.userVK .shortView{
+    height: 100px;
+    background-color: rgb(222, 233, 233);
+}
+
+.userVk .userInfoShot{
+    margin-left: 20px;
+}
