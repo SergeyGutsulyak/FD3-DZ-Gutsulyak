@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import '../css/reset.css'
 import Ishop2 from './components/Ishop2';
 
 var categoryText='Наборы инструментов';

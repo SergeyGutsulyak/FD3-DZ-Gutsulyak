@@ -1,10 +1,10 @@
 ﻿import { combineReducers } from 'redux';
 
-import clientsReducer from "./clientsReducer";
+import usersReducer from "./usersReducer";
 
 let combinedReducer=combineReducers({
     // редьюсер countersReducer отвечает за раздел state под именем counters
-    clients: clientsReducer, 
+    users: usersReducer, 
     // + другие редьюсеры
 });
 

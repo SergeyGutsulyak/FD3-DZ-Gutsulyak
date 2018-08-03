@@ -2,18 +2,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './css/reset.css'
 
-import UsersList from './components/UsersList';
-
-//let companyName='Velcom';
-let clientsArr=[ 
-  {id:101, fam:"Иванов", im:"Иван", otch:"Иванович", balance:200}, 
-  {id:105, fam:"Сидоров", im:"Сидор", otch:"Сидорович", balance:250}, 
-  {id:110, fam:"Петров", im:"Пётр", otch:"Петрович", balance:180},
-  {id:120, fam:"Григорьев", im:"Григорий", otch:"Григорьевич", balance:220},
-];
+import MainPage from './core/MainPage';
 
 ReactDOM.render(
-  <UsersList />
+  <MainPage />
   , document.getElementById('container') 
 );
