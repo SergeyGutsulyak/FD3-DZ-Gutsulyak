@@ -3,12 +3,14 @@ import {default as isoFetch} from 'isomorphic-fetch';
 import {connect} from 'react-redux';
 import {users_load} from '../redux/usersAC';
 
+import { NavLink } from 'react-router-dom';
+
 import UserVK from './UserVK';
 
 class UsersList extends React.PureComponent {
 
     fetchError = (errorMessage) => {
-        //console.error(showStr);
+        console.error(showStr);
     };
       
     fetchSuccess = (loadedData) => {

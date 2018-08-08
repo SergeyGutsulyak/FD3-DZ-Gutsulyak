@@ -2,11 +2,16 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/reset.css'
+import { BrowserRouter } from 'react-router-dom';
 
-import MainPage from './core/MainPage';
+import PagesRouter from './pages/PagesRouter';
+import PagesLinks from './pages/PagesLinks';
 
-ReactDOM.render(
-  <MainPage />
-  , document.getElementById('container') 
-);
+ReactDOM.render( 
+  <BrowserRouter>
+    <div>
+      <PagesLinks />
+      <PagesRouter />
+    </div>
+  </BrowserRouter>
+, document.getElementById('container') );
