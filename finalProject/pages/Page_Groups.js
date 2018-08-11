@@ -2,19 +2,16 @@
 import React from 'react';
 
 import {connect} from 'react-redux';
-import UsersList from '../components/UsersList';
+import GroupsList from '../components/GroupsList';
 
-class Page_Users extends React.PureComponent {
-  
+class Page_Groups extends React.PureComponent {
+
   render() {
     console.log('render PageUsers')
     
     //page={this.props.match.params.page}
     return (
-        <div>
-          <UsersList page={this.props.match.params.page}/>
-        </div>
-
+          <GroupsList />
     );
   }
 }
@@ -25,5 +22,5 @@ const mapStateToProps = function (state) {
 };
 
 
-export default connect(mapStateToProps)(Page_Users);
-//export default Page_Users;    
+export default connect(mapStateToProps)(Page_Groups);
+//export default Page_Groups;    

@@ -17,6 +17,7 @@ export default new Config().merge({
   entry: ["babel-polyfill",'./App.js'],
   output: {
     path: __dirname + '/public',
+    publicPath:'/',
   },
   devtool:'source-map',
   module: {

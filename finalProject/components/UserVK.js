@@ -1,47 +1,12 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-//import {clientMode_change, clientData_save, client_delete} from '../redux/clientsAC';
 
+//import {clientMode_change, clientData_save, client_delete} from '../redux/clientsAC';
+import {msToDateTime,platforms} from '../my_modules/fun';
 import './UserVK.css';
 
 class UserVK extends React.PureComponent {
-  platforms={ 1:'мобильная версия',
-              2:'приложение для iPhone',
-              3:'приложение для iPad',
-              4:'приложение для Android',
-              5:'приложение для Windows Phone',
-              6:'приложение для Windows 10',
-              7:'полная версия сайта',
-              8:'VK Mobile'}
-/* Дата последнего посещения в базе не актуальна, по причине редкого обновления*/
-  formatDateTime(dt) {
-    var year=dt.getFullYear();
-    var month=dt.getMonth()+1;
-    var day=dt.getDate();
-    var hours=dt.getHours();
-    var minutes=dt.getMinutes();
-    var seconds=dt.getSeconds();
-
-    return str0l(day,2) + '.' + str0l(month,2) + '.' + year + ' ' + str0l(hours,2) + ':' + str0l(minutes,2) + ':' + str0l(seconds,2);
-
-    function str0l(val,len) {
-      var strVal=val.toString();
-      while ( strVal.length < len )
-          strVal='0'+strVal;
-      return strVal;
-    }
-  }
-
-  msToString(ms){
-    //console.log(ms);
-    var dt=new Date(ms*1000);
-    //console.log(dt);
-    return this.formatDateTime(dt);
-  }
-        
-            // дополняет строку Val слева нулями до длины Len
-   
+    
 /*
   static propTypes = {
     client:PropTypes.shape({
@@ -54,19 +19,6 @@ class UserVK extends React.PureComponent {
     })
   };
   */
-/*
-  state = {
-    FIO: this.props.FIO,
-    balance: this.props.balance,
-    canEdit:false,
-  };
-  */
-/*
-  componentWillReceiveProps = (newProps) => {
-    //console.log("MobileClient id="+this.props.id+" componentWillReceiveProps");
-    this.setState({FIO:newProps.FIO,balance:newProps.balance,canEdit:newProps.canEdit});
-  };
-*/
   render(){
     //console.log(this.props.userData['maiden_name']);
     return (
@@ -147,7 +99,7 @@ class UserVK extends React.PureComponent {
                 {'Последнее посещение:'}
               </div>
               <div className='info'>
-                {this.msToString(this.props.userData['last_seen_time'])+' с платформы: '+this.platforms[this.props.userData['last_seen_platform']]}
+                {msToDateTime(this.props.userData['last_seen_time'])+' с платформы: '+platforms[this.props.userData['last_seen_platform']]}
               </div>
             </div>
             {(this.props.userData['home_phone'])&&
@@ -182,10 +134,5 @@ class UserVK extends React.PureComponent {
       )
     )};    
 };
-
-// но этому компоненту нужен сам this.props.dispatch, и чтобы
-// он появился, следует присоединить (connect) компонент к хранилищу Redux
-
-//export default connect(mapStateToProps)(MobileClient);
 
 export default UserVK

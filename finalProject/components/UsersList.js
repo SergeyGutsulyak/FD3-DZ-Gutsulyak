@@ -1,7 +1,9 @@
 ﻿import React from 'react';
-import {default as isoFetch} from 'isomorphic-fetch';
 import {connect} from 'react-redux';
-import {users_load} from '../redux/usersAC';
+import {users_load,change_users_page} from '../redux/usersAC';
+import ReqAJAX from '../my_modules/ReqAJAX';
+
+import './UsersList.css';
 
 import { NavLink } from 'react-router-dom';
 
@@ -10,61 +12,45 @@ import UserVK from './UserVK';
 class UsersList extends React.PureComponent {
 
     fetchError = (errorMessage) => {
-        console.error(showStr);
+        console.error(errorMessage);
     };
       
     fetchSuccess = (loadedData) => {
-       console.log(loadedData);
+       //console.log(loadedData);
        this.props.dispatch(users_load(loadedData));
     };
-      
-    loadData = () => {
-      
-        isoFetch("http://localhost:5000/users", {
-            method: 'post',
-            headers: {
-                "Accept": "application/json",
-            },
-        })
-            .then( (response) => { // response - HTTP-ответ
-                if (!response.ok) {
-                    let Err=new Error("fetch error " + response.status);
-                    Err.userMessage="Ошибка связи";
-                    throw Err; // дальше по цепочке пойдёт отвергнутый промис
-                }
-                else
-                    return response.json(); // дальше по цепочке пойдёт промис с пришедшими по сети данными
-            })
-            .then( (data) => {
-                try {
-                    this.fetchSuccess(data); // передаём полезные данные в fetchSuccess, дальше по цепочке пойдёт успешный пустой промис
-                }
-                catch ( error ){
-                    this.fetchError(error.message); // если что-то пошло не так - дальше по цепочке пойдёт отвергнутый промис
-                }
-            })
-            .catch( (error) => {
-                this.fetchError(error.userMessage||error.message);
-            })
-        ;
-      
-      };
-      
+    getAjaxData=new ReqAJAX("http://localhost:5000/users",this.fetchError,this.fetchSuccess);  
+
+componentWillReceiveProps(newProps){
+    console.log('Событие componentWillUpdate UsersList');
+    //console.log(newProps.page);
+    //console.log(newProps.users.mode.curPage);
+    if (newProps.page!=newProps.users.mode.curPage){
+        this.props.dispatch(change_users_page(newProps.page));
+    }
+}
 
 componentWillMount(){
    console.log('Событие componentWillMount');
-   this.loadData();
+   //this.loadData();
+   this.getAjaxData.loadData();
 }
+/*
+componentWillReceiveProps(){
+   console.log('Событие componentWillReceiveProps');
+   //this.props.dispatch(change_users_page(this.props.match.params.page));
 
+}
+*/
 render() {
-    console.log(this.props);
+    console.log('Номер страницы при рендере UsersList:'+this.props.page);
     if ( !this.props.users.mode.dataReady )
         return <div>загрузка данных...</div>;
 
     let usersVKCode=[];
 
-    for (var key in this.props.users.all){
-        let user=this.props.users.all[key];
+    for (let key in this.props.users.crop){
+        let user=this.props.users.crop[key];
         usersVKCode.push(
             <UserVK 
                 key={key}
@@ -73,10 +59,22 @@ render() {
         );
     }
 
+    let pagesLinksCode=[];
+    for (let i=1;i<=this.props.users.mode.countPages;i++){
+        pagesLinksCode.push(<NavLink to={"/users/"+i} className="PageUserLink" key={i}>{i}</NavLink>)
+    }
+
     return(
         <div className='UsersList'>
+            <div className="LinksPages">
+                {pagesLinksCode}
+            </div>
             {usersVKCode}
+            <div className="LinksPages">
+                {pagesLinksCode}
+            </div>
         </div>
+        
     );
   }
 

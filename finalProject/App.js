@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import PagesRouter from './pages/PagesRouter';
 import PagesLinks from './pages/PagesLinks';
 
+import './css/reset.css';
 ReactDOM.render( 
   <BrowserRouter>
     <div>

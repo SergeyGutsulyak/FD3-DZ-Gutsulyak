@@ -1,5 +1,8 @@
-.userVK{
-    border: 1px #39a8db solid;
+.PageUserLink{
+    margin: 5px;
+}.userVK{
+    border: 1px #39a8db;
+    border-radius:10px;
     margin: 7px;
 }
 
@@ -83,4 +86,13 @@
 
 .userVK .socialNetworks .instagram .socialIcon{
     background-position: -205px -9px;
+}.PageLink {
+    color: black;
+    margin-right: 10px;
 }
+
+.ActivePageLink {
+    font-weight: bold;
+}
+
+/*# sourceMappingURL=main.bundle.49d8b6585c02a3ff5f58.css.map*/

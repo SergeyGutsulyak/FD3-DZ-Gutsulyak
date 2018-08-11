@@ -27,3 +27,9 @@ q:before,q:after {
 	content:'';
 }
 abbr,acronym { border:0;}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
