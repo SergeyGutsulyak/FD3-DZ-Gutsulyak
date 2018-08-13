@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './GroupVK.css';
 import {msToDateTime} from '../my_modules/fun';
+import { NavLink } from 'react-router-dom';
 class GroupVK extends React.PureComponent {
     
   /*
@@ -55,7 +56,9 @@ class GroupVK extends React.PureComponent {
                         (<span className='scanOFF'>Сканирование отключено</span>)
                     }
                 </div>
-
+                <div>
+                  <NavLink to={"/users/"+this.props.groupData['id']+'/1'} className="PageUserLink" key={this.props.groupData['id']}>{'Посмотреть пользователей'}</NavLink>
+                </div>
 
             </div>
         </div>

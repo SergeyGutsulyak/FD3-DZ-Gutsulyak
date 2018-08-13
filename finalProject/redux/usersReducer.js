@@ -1,4 +1,4 @@
-﻿import { LOAD_USERS, CHANGE_USERS_PAGE } from './usersAC';
+﻿import { LOAD_USERS, CHANGE_USERS_PAGE,CHANGE_DATA_READY } from './usersAC';
 
 const START_USER_ON_PAGE=20;//количество отображаемых пользователй на странице
 
@@ -30,8 +30,8 @@ function usersReducer(state=initState,action) {
       }
       */
     //console.log(clientHash);
-    console.log('Загрузка данных');
-    console.log(action.users);
+    //console.log('Загрузка данных');
+    //console.log(action.users);
     
     let ArrayFromAjax=[];
     for (let i in action.users.data){
@@ -46,19 +46,26 @@ function usersReducer(state=initState,action) {
         mode:{dataReady:true,
               usersOnPage:START_USER_ON_PAGE,
               countPages:countPages,
-              curPage:1,}
+            }
     };
       return newState;
     };
     case CHANGE_USERS_PAGE:{
-      console.log(CHANGE_USERS_PAGE);
-      console.log('Номер страницы: '+action.page);
+      //console.log(CHANGE_USERS_PAGE);
+      //console.log('Номер страницы: '+action.page);
       let newState={...state,
         crop:state.filtr.slice(state.mode.usersOnPage*(action.page-1),state.mode.usersOnPage*action.page),
         mode:{...state.mode,curPage:action.page}};
-        console.log(newState);
+        //console.log(newState);
       return newState;
       }
+
+    case CHANGE_DATA_READY:{
+      let newState={...state,
+          mode:{...state.mode,dataReady:action.isReady}
+      };
+      return newState;
+    }
     default:
       return state;
   }

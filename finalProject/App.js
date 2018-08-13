@@ -8,11 +8,22 @@ import PagesRouter from './pages/PagesRouter';
 import PagesLinks from './pages/PagesLinks';
 
 import './css/reset.css';
+
+
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import combinedReducer from './redux/reducers.js';
+
+let store=createStore(combinedReducer);
+
+
 ReactDOM.render( 
-  <BrowserRouter>
-    <div>
-      <PagesLinks />
-      <PagesRouter />
-    </div>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>
+        <PagesLinks />
+        <PagesRouter />
+      </div>
+    </BrowserRouter>
+  </Provider>
 , document.getElementById('container') );

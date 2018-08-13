@@ -1,28 +1,18 @@
 ﻿import React from 'react';
 import {connect} from 'react-redux';
-import {users_load,change_users_page} from '../redux/usersAC';
-import ReqAJAX from '../my_modules/ReqAJAX';
+import {change_users_page} from '../redux/usersAC';
 
+import { withRouter } from 'react-router-dom';
 import './UsersList.css';
 
 import { NavLink } from 'react-router-dom';
-
 import UserVK from './UserVK';
 
 class UsersList extends React.PureComponent {
 
-    fetchError = (errorMessage) => {
-        console.error(errorMessage);
-    };
-      
-    fetchSuccess = (loadedData) => {
-       //console.log(loadedData);
-       this.props.dispatch(users_load(loadedData));
-    };
-    getAjaxData=new ReqAJAX("http://localhost:5000/users",this.fetchError,this.fetchSuccess);  
 
 componentWillReceiveProps(newProps){
-    console.log('Событие componentWillUpdate UsersList');
+    console.log('Событие componentWillReceiveProps UsersList');
     //console.log(newProps.page);
     //console.log(newProps.users.mode.curPage);
     if (newProps.page!=newProps.users.mode.curPage){
@@ -31,17 +21,11 @@ componentWillReceiveProps(newProps){
 }
 
 componentWillMount(){
-   console.log('Событие componentWillMount');
-   //this.loadData();
-   this.getAjaxData.loadData();
-}
-/*
-componentWillReceiveProps(){
-   console.log('Событие componentWillReceiveProps');
-   //this.props.dispatch(change_users_page(this.props.match.params.page));
+   console.log('Событие componentWillMount  UsersList');
 
+   //this.getAjaxData.loadData();
 }
-*/
+
 render() {
     console.log('Номер страницы при рендере UsersList:'+this.props.page);
     if ( !this.props.users.mode.dataReady )
@@ -61,7 +45,7 @@ render() {
 
     let pagesLinksCode=[];
     for (let i=1;i<=this.props.users.mode.countPages;i++){
-        pagesLinksCode.push(<NavLink to={"/users/"+i} className="PageUserLink" key={i}>{i}</NavLink>)
+        pagesLinksCode.push(<NavLink to={"/users/"+this.props.match.params.idGroup+'/'+i} className="PageUserLink" key={i}>{i}</NavLink>)
     }
 
     return(
@@ -91,5 +75,5 @@ const mapStateToProps = function (state) {
     };
   };
   
-export default connect(mapStateToProps)(UsersList);
+export default connect(mapStateToProps)(withRouter(UsersList));
 

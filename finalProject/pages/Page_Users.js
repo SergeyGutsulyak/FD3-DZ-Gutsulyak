@@ -3,18 +3,50 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 import UsersList from '../components/UsersList';
+import {users_load,change_users_dataready} from '../redux/usersAC';
+import {groups_change_current} from '../redux/groupsAC';
+import ReqAJAX from '../my_modules/ReqAJAX';
+import {MAIN_HOST} from '../my_modules/Settings';
+
 
 class Page_Users extends React.PureComponent {
   
+  fetchError = (errorMessage) => {
+    console.error(errorMessage);
+  };
+
+  fetchSuccess = (loadedData) => {
+    console.log('Закгрузка данные в Page_Users')
+    console.log(loadedData);
+    this.props.dispatch(users_load(loadedData));
+    this.props.dispatch(groups_change_current(this.props.match.params.idGroup));    
+  };
+  
+  getAjaxData=new ReqAJAX(MAIN_HOST+"users",this.fetchError,this.fetchSuccess); 
+
+
+
+  componentWillMount(){
+    console.log('Событие componentWillMount  Page_Users');
+    //console.log(this.props.match)
+    this.props.dispatch(change_users_dataready(false));
+    this.getAjaxData.setBody({'idGroup':this.props.match.params.idGroup});
+    this.getAjaxData.loadData();
+    
+    
+ }
+ componentWillReceiveProps(newProps){
+  console.log('Событие componentWillReceiveProps Page_Users');
+  //this.getAjaxData.setBody({'idGroup':this.props.match.params.idGroup})
+  //this.getAjaxData.loadData();
+  
+}
   render() {
     console.log('render PageUsers')
     
     //page={this.props.match.params.page}
     return (
-        <div>
           <UsersList page={this.props.match.params.page}/>
-        </div>
-
     );
   }
 }
@@ -26,4 +58,3 @@ const mapStateToProps = function (state) {
 
 
 export default connect(mapStateToProps)(Page_Users);
-//export default Page_Users;    

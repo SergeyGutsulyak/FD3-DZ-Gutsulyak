@@ -1,12 +1,13 @@
-import { LOAD_GROUPS} from './groupsAC';
+import { LOAD_GROUPS,CHANGE_CURRENT_GROUP} from './groupsAC';
 
 //const START_USER_ON_PAGE=20;//количество отображаемых пользователй на странице
 
 const initState={
     all:[],      //все группы
-    filtr:[],
+  //filtr:[],
   //  crop:{},     //видимые пользователи
     mode:{dataReady:false},
+    currentGroup:0,
 }
 
 function groupsReducer(state=initState,action) {
@@ -24,7 +25,7 @@ function groupsReducer(state=initState,action) {
     }
 
    
-    let newState={
+    let newState={...state,
         all:[...ArrayFromAjax],//все пользователи
         filtr:[...ArrayFromAjax],//отфильтрованные пользователи
         //crop:ArrayFromAjax.slice(0,START_USER_ON_PAGE),//отображаемые пользователи
@@ -34,6 +35,14 @@ function groupsReducer(state=initState,action) {
       return newState;
     };
     
+
+    case CHANGE_CURRENT_GROUP:{
+      console.log('Изменяем номер текущей группы'+action.idCurrentGroup)
+      let newState={...state,currentGroup:action.idCurrentGroup}
+      console.log(newState)
+      return newState;
+    }
+
     default:
       return state;
   }

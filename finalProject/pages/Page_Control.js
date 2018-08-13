@@ -1,17 +1,16 @@
-
 import React from 'react';
 
 //import {connect} from 'react-redux';
-import GroupsList from '../components/GroupsList';
+import ControlBox from '../components/ControlBox';
 
-class Page_Groups extends React.PureComponent {
-
+class Page_Control extends React.PureComponent {
+  
   render() {
-    console.log('render PageGroups');
-        
+    //console.log('render PageUsers')
+    console.log(this.props)
     //page={this.props.match.params.page}
     return (
-          <GroupsList />
+          <ControlBox/>
     );
   }
 }
@@ -22,6 +21,7 @@ const mapStateToProps = function (state) {
 };
 
 
-export default connect(mapStateToProps)(Page_Groups);
+export default connect(mapStateToProps)(Page_Users);
 */
-export default Page_Groups;    
+
+export default Page_Control;

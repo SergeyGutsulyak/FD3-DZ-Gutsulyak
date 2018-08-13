@@ -20,7 +20,9 @@ class  ReqAJAX{
     };
 
     setBody=(_paramBody)=>{
-        param['body']= JSON.stringify(_paramBody);
+        //console.log(_paramBody)
+        this.param['body']= JSON.stringify(_paramBody);
+        //console.log(this.param)
     };
     setFetchError=(funFetchError)=>{
         this.fetchError=funFetchError;

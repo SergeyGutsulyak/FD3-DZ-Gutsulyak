@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {groups_load} from '../redux/groupsAC';
 import ReqAJAX from '../my_modules/ReqAJAX';
+import {MAIN_HOST} from '../my_modules/Settings';
 
 import './GroupsList.css';
 
@@ -19,10 +20,10 @@ class GroupsList extends React.PureComponent {
        //console.log(loadedData);
        this.props.dispatch(groups_load(loadedData));
     };
-    getAjaxData=new ReqAJAX("http://localhost:5000/groups",this.fetchError,this.fetchSuccess);  
+    getAjaxData=new ReqAJAX(MAIN_HOST+"groups",this.fetchError,this.fetchSuccess);  
 
     componentWillMount(){
-        console.log('Событие componentWillMount');
+       // console.log('Событие componentWillMount');
         this.getAjaxData.loadData();
     }
 
