@@ -1,10 +1,10 @@
 ﻿import React from 'react';
 import {connect} from 'react-redux';
-import {change_users_page} from '../redux/usersAC';
+import {change_count_users_on_page,set_filtr_all,set_filtr_add,set_filtr_del} from '../redux/usersAC';
 
 import { withRouter } from 'react-router-dom';
 import './UsersList.css';
-
+import {delHourMinSec,formatDate} from '../my_modules/fun';
 import { NavLink } from 'react-router-dom';
 import UserVK from './UserVK';
 
@@ -13,11 +13,21 @@ class UsersList extends React.PureComponent {
 
 componentWillReceiveProps(newProps){
     console.log('Событие componentWillReceiveProps UsersList');
-    //console.log(newProps.page);
-    //console.log(newProps.users.mode.curPage);
-    if (newProps.page!=newProps.users.mode.curPage){
-        this.props.dispatch(change_users_page(newProps.page));
+    console.log(newProps)
+    
+    if (newProps.match.params.page>Math.ceil((newProps.users.filtr.length)/newProps.users.mode.usersOnPage)){
+        //newProps.history.pop()
+        //newProps.history.push('/users/'+this.props.match.params.idGroup+'/1')
+        newProps.history.replace('/users/'+this.props.match.params.idGroup+'/1')
+        newProps.match.params.page=1
     }
+    
+    console.log(this.props);
+    /*
+    if (newProps.match.params.page!=this.props.match.params.page){
+        this.props.dispatch(change_users_page(1));
+    }*/
+    //this.props.dispatch(change_users_page(1));
 }
 
 componentWillMount(){
@@ -25,31 +35,95 @@ componentWillMount(){
 
    //this.getAjaxData.loadData();
 }
+changeCountUsersOnPage=(e)=>{
+    this.props.dispatch(change_count_users_on_page(e.target.value))
+    this.props.history.push('/users/'+this.props.match.params.idGroup+'/1')
+    //console.log(e.target.value)
+}
+setFiltrAll=()=>{
+   this.props.dispatch(set_filtr_all())
+   console.log(this.props)
+   this.props.history.push('/users/'+this.props.match.params.idGroup+'/1')
+}
+setFiltrAdd=()=>{
+    this.props.dispatch(set_filtr_add())
+    this.props.history.push('/users/'+this.props.match.params.idGroup+'/1')
+}
+
+setFiltrDel=()=>{
+    this.props.dispatch(set_filtr_del())
+    this.props.history.push('/users/'+this.props.match.params.idGroup+'/1')
+}
+ 
 
 render() {
-    console.log('Номер страницы при рендере UsersList:'+this.props.page);
+    console.log('Номер страницы при рендере UsersList:'+this.props.match.params.page);
     if ( !this.props.users.mode.dataReady )
         return <div>загрузка данных...</div>;
 
     let usersVKCode=[];
 
-    for (let key in this.props.users.crop){
-        let user=this.props.users.crop[key];
+    let curPage=this.props.match.params.page;
+    let usersOnPage=this.props.users.mode.usersOnPage;
+    let sliceArr=this.props.users.filtr.slice(usersOnPage*(curPage-1),usersOnPage*curPage)
+
+    let prevDate=delHourMinSec(sliceArr[0].action.date);
+    //console.log(sliceArr[0]);
+    usersVKCode.push(<p key={formatDate(prevDate)}>{formatDate(prevDate)}</p>);
+
+    for (let key in sliceArr){
+        //console.log(key)
+        let user=sliceArr[key];
+        let curDate=delHourMinSec(user.action.date);
+        if (curDate.valueOf()!=prevDate.valueOf()){
+            //console.log(prevDate.valueOf())
+            //console.log(curDate.valueOf())
+            usersVKCode.push(<p key={formatDate(curDate)}>{formatDate(curDate)}</p>);
+            prevDate=curDate;    
+        }
         usersVKCode.push(
             <UserVK 
-                key={key}
+                key={user['key']}
                 userData={user}
             />
         );
     }
 
     let pagesLinksCode=[];
-    for (let i=1;i<=this.props.users.mode.countPages;i++){
+
+    let countPages=Math.ceil(this.props.users.filtr.length/usersOnPage);
+
+    for (let i=1;i<=countPages;i++){
         pagesLinksCode.push(<NavLink to={"/users/"+this.props.match.params.idGroup+'/'+i} className="PageUserLink" key={i}>{i}</NavLink>)
     }
 
     return(
         <div className='UsersList'>
+            <div className="contolPanel">
+                <div className="selectCountOnPage"> <span>Количество на странице: </span>
+                    <select defaultValue={usersOnPage} onChange={this.changeCountUsersOnPage}>
+                        <option value='10' >10</option>
+                        <option value='20' >20</option>
+                        <option value='50' >50</option>
+                    </select>
+                </div>
+                <input 
+                    type='button'
+                    value='Все'
+                    onClick={this.setFiltrAll}
+                />
+
+                <input 
+                    type='button'
+                    value='Новые'
+                    onClick={this.setFiltrAdd}
+                />
+                <input 
+                    type='button'
+                    value='Ушедшие'
+                    onClick={this.setFiltrDel}
+                />
+            </div>
             <div className="LinksPages">
                 {pagesLinksCode}
             </div>

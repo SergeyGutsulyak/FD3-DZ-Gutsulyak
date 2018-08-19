@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
-
-//import {clientMode_change, clientData_save, client_delete} from '../redux/clientsAC';
+import {connect} from 'react-redux';
+import {user_invers_type_view} from '../redux/usersAC';
 import {msToDateTime,platforms} from '../my_modules/fun';
 import './UserVK.css';
 
@@ -19,12 +19,17 @@ class UserVK extends React.PureComponent {
     })
   };
   */
+  inversFull=()=>{
+    this.props.dispatch(user_invers_type_view(this.props.userData['key']));
+    //console.log('клик на юзере')
+  }
+
   render(){
     //console.log(this.props.userData['maiden_name']);
     return (
+    <div className={'userVK '+this.props.userData.action['type']}>{
     (!this.props.userData['deactivated'])?(  
-      <div className='userVK'>
-        <div className='shortView'>
+        <div>
           <div className='userPhoto'>
             <a href={'https://vk.com/'+this.props.userData['domain']} target="_blank">
               <img
@@ -75,8 +80,11 @@ class UserVK extends React.PureComponent {
                   <a href={this.props.userData['site']} target="_blank">{this.props.userData['site']}</a>
                 </div>
               </div>}
+              {(!this.props.userData['isFullView'])&&(
+                <input type='button' value='Подробнее...' onClick={this.inversFull}/>
+              )}
             </div>
-          <div className='fullView'>
+          <div className={'fullView'+((this.props.userData['isFullView'])?(' onView'):(' offView'))}>
             <div className='followersCount'>
               <div className='label'>
                 {'Количество подписчиков:'}
@@ -126,13 +134,23 @@ class UserVK extends React.PureComponent {
             <p className='twitter'><span className='socialIcon'></span>{this.props.userData['twitter']}</p>
             <p className='instagram'><span className='socialIcon'></span>{this.props.userData['instagram']}</p>
           </div>
+          {(this.props.userData['isFullView'])&&(
+                <input type='button' value='Скрыть подробности...' onClick={this.inversFull}/>
+            )}
         </div>
       </div>
-      </div>
-      </div>):(
-      <div className='userVK'>Страница пользователя удалена</div>
-      )
+      </div> 
+      ):(<div>Страница пользователя удалена</div>)
+    }</div>  
     )};    
 };
 
-export default UserVK
+//export default UserVK
+
+const mapStateToProps = function (state) {
+  return {
+
+  };
+};
+
+export default connect(mapStateToProps)(UserVK);

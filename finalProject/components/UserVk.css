@@ -1,18 +1,24 @@
 .userVK{
-    border: 1px #39a8db solid;
     margin: 7px;
+    min-height: 100px;
+    background-color: rgb(222, 233, 233);
 }
 
+.userVK.add{
+    border: 1px #31e22b solid;
+}
+
+.userVK.del{
+    border: 1px #ee291b solid;
+}
 .userVK .userPhoto{
     width: 100px;
     float: left;
 }
 
-.userVK .shortView{
-    min-height: 100px;
-    background-color: rgb(222, 233, 233);
+.userVK .fullView.offView{
+    display:none;
 }
-
 .userVK .userInfo .userName{
     font-size: 20px;
     display: inline-block;

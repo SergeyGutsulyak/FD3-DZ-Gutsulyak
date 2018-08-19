@@ -3,7 +3,7 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 import UsersList from '../components/UsersList';
-import {users_load,change_users_dataready} from '../redux/usersAC';
+import {users_load,change_users_dataready,change_users_page} from '../redux/usersAC';
 import {groups_change_current} from '../redux/groupsAC';
 import ReqAJAX from '../my_modules/ReqAJAX';
 import {MAIN_HOST} from '../my_modules/Settings';
@@ -39,6 +39,7 @@ class Page_Users extends React.PureComponent {
   console.log('Событие componentWillReceiveProps Page_Users');
   //this.getAjaxData.setBody({'idGroup':this.props.match.params.idGroup})
   //this.getAjaxData.loadData();
+  this.props.dispatch(change_users_page(1));
   
 }
   render() {
@@ -46,7 +47,7 @@ class Page_Users extends React.PureComponent {
     
     //page={this.props.match.params.page}
     return (
-          <UsersList page={this.props.match.params.page}/>
+          <UsersList/>
     );
   }
 }

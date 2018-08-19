@@ -39,7 +39,7 @@ function groupsReducer(state=initState,action) {
     case CHANGE_CURRENT_GROUP:{
       console.log('Изменяем номер текущей группы'+action.idCurrentGroup)
       let newState={...state,currentGroup:action.idCurrentGroup}
-      console.log(newState)
+      //console.log(newState)
       return newState;
     }
 
