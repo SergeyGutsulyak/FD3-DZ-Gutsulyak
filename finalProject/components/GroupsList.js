@@ -9,6 +9,7 @@ import './GroupsList.css';
 import { NavLink } from 'react-router-dom';
 
 import GroupVK from './GroupVK';
+import LoadAnimation from './LoadAnimation'
 
 class GroupsList extends React.PureComponent {
 
@@ -17,20 +18,21 @@ class GroupsList extends React.PureComponent {
     };
       
     fetchSuccess = (loadedData) => {
-       //console.log(loadedData);
+       console.log(loadedData);
        this.props.dispatch(groups_load(loadedData));
+
     };
     getAjaxData=new ReqAJAX(MAIN_HOST+"groups",this.fetchError,this.fetchSuccess);  
 
     componentWillMount(){
-       // console.log('Событие componentWillMount');
+       console.log('Событие componentWillMount');
         this.getAjaxData.loadData();
     }
 
 render() {
    
     if ( !this.props.groups.mode.dataReady )
-        return <div>загрузка данных...</div>;
+        return <LoadAnimation/>;
 
     let groupsVKCode=[];
 
@@ -53,12 +55,10 @@ render() {
         <div className='GroupsList'>
             {groupsVKCode}
         </div>
-        
     );
   }
 
 }
-
 
 const mapStateToProps = function (state) {
      return {

@@ -7,13 +7,13 @@ import './UsersList.css';
 import {delHourMinSec,formatDate} from '../my_modules/fun';
 import { NavLink } from 'react-router-dom';
 import UserVK from './UserVK';
-
+import LoadAnimation from './LoadAnimation'
 class UsersList extends React.PureComponent {
 
 
 componentWillReceiveProps(newProps){
-    console.log('Событие componentWillReceiveProps UsersList');
-    console.log(newProps)
+    //console.log('Событие componentWillReceiveProps UsersList');
+    //console.log(newProps)
     
     if (newProps.match.params.page>Math.ceil((newProps.users.filtr.length)/newProps.users.mode.usersOnPage)){
         //newProps.history.pop()
@@ -22,7 +22,7 @@ componentWillReceiveProps(newProps){
         newProps.match.params.page=1
     }
     
-    console.log(this.props);
+    //console.log(this.props);
     /*
     if (newProps.match.params.page!=this.props.match.params.page){
         this.props.dispatch(change_users_page(1));
@@ -57,28 +57,40 @@ setFiltrDel=()=>{
  
 
 render() {
-    console.log('Номер страницы при рендере UsersList:'+this.props.match.params.page);
+    //console.log('Номер страницы при рендере UsersList:'+this.props.match.params.page);
+    if ( this.props.match.params.idGroup==0)
+        return <div>
+                Группа не выбрана, выберете группу <a href='/'>Здесь</a>
+               </div>;
+
     if ( !this.props.users.mode.dataReady )
-        return <div>загрузка данных...</div>;
+        return <LoadAnimation/>;
 
     let usersVKCode=[];
 
     let curPage=this.props.match.params.page;
     let usersOnPage=this.props.users.mode.usersOnPage;
     let sliceArr=this.props.users.filtr.slice(usersOnPage*(curPage-1),usersOnPage*curPage)
-
+    //обнуление часы, минуты....
     let prevDate=delHourMinSec(sliceArr[0].action.date);
     //console.log(sliceArr[0]);
-    usersVKCode.push(<p key={formatDate(prevDate)}>{formatDate(prevDate)}</p>);
+    usersVKCode.push(<div
+            key={formatDate(prevDate)}
+            className="Date"
+            ><span> {formatDate(prevDate)}<br/></span>
+        </div>
+    );
 
     for (let key in sliceArr){
         //console.log(key)
         let user=sliceArr[key];
         let curDate=delHourMinSec(user.action.date);
         if (curDate.valueOf()!=prevDate.valueOf()){
-            //console.log(prevDate.valueOf())
-            //console.log(curDate.valueOf())
-            usersVKCode.push(<p key={formatDate(curDate)}>{formatDate(curDate)}</p>);
+            usersVKCode.push(<div
+                key={formatDate(curDate)}
+                className="Date"
+                ><span> {formatDate(curDate)}<br/></span>
+            </div> );
             prevDate=curDate;    
         }
         usersVKCode.push(
@@ -94,19 +106,23 @@ render() {
     let countPages=Math.ceil(this.props.users.filtr.length/usersOnPage);
 
     for (let i=1;i<=countPages;i++){
-        pagesLinksCode.push(<NavLink to={"/users/"+this.props.match.params.idGroup+'/'+i} className="PageUserLink" key={i}>{i}</NavLink>)
+        
+        let lnk=<div key={i} className="PageLinkSmall">
+                    <NavLink 
+                        to={"/users/"+this.props.match.params.idGroup+'/'+i}
+                        className="PageUserLink"
+                        activeClassName="ActivePageLink"
+                        >
+                        {i}
+                    </NavLink>
+                    <div className="UnderLink"></div>
+                </div>
+        pagesLinksCode.push(lnk);
     }
 
     return(
         <div className='UsersList'>
-            <div className="contolPanel">
-                <div className="selectCountOnPage"> <span>Количество на странице: </span>
-                    <select defaultValue={usersOnPage} onChange={this.changeCountUsersOnPage}>
-                        <option value='10' >10</option>
-                        <option value='20' >20</option>
-                        <option value='50' >50</option>
-                    </select>
-                </div>
+            <div className="ControlPanel">
                 <input 
                     type='button'
                     value='Все'
@@ -123,11 +139,20 @@ render() {
                     value='Ушедшие'
                     onClick={this.setFiltrDel}
                 />
+                <div className="SelectCountOnPage"> <span>Количество на странице: </span>
+                    <select defaultValue={usersOnPage} onChange={this.changeCountUsersOnPage}>
+                        <option value='10' >10</option>
+                        <option value='20' >20</option>
+                        <option value='50' >50</option>
+                    </select>
+                </div>
             </div>
             <div className="LinksPages">
                 {pagesLinksCode}
             </div>
-            {usersVKCode}
+            <div className='UsersContainer'>
+                {usersVKCode}
+            </div>
             <div className="LinksPages">
                 {pagesLinksCode}
             </div>

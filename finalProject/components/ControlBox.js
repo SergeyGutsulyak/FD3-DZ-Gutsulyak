@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ReqAJAX from '../my_modules/ReqAJAX';
-
+import {MAIN_HOST} from '../my_modules/Settings';
 import './ControlBox.css';
 
 import { NavLink } from 'react-router-dom';
@@ -18,7 +18,7 @@ class GroupsList extends React.PureComponent {
        //console.log(loadedData);
        this.props.dispatch(groups_load(loadedData));
     };
-    getAjaxData=new ReqAJAX("http://localhost:5000/groups",this.fetchError,this.fetchSuccess);  
+    getAjaxData=new ReqAJAX(MAIN_HOST+"groups",this.fetchError,this.fetchSuccess);  
 
     componentWillMount(){
         //console.log('Событие componentWillMount');

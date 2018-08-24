@@ -1,15 +1,18 @@
 .userVK{
-    margin: 7px;
+    /* animation: appearance 1s ease-in-out; */
+    
+    animation: slideDown 1s ease;
+    margin-top: 5px;
     min-height: 100px;
-    background-color: rgb(222, 233, 233);
+    background-color:#edeef0;
 }
 
 .userVK.add{
-    border: 1px #31e22b solid;
+    border: 2px #31e22b solid;
 }
 
 .userVK.del{
-    border: 1px #ee291b solid;
+    border: 2px #ee291b solid;
 }
 .userVK .userPhoto{
     width: 100px;
@@ -28,40 +31,29 @@
 .userVK .userInfo{
     margin-left: 20px;
     display: inline-block;
-    width: 600px;
+    width: 400px;
 }
 .userVK .userInfo .label{
     display: inline-block;
-    width: 180px;
+    width: 175px;
 }
 .userVK .userInfo .info{
     display: inline-block;
 }
 
-/*
-.userVK .userInfo .userId{
-    display: inline-block;
-    margin-right: 15px;
-    width: 100px;
+.userVK input[type='button']{
+    border: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: #edeef0;
+    color: #1624f0;
+    font-weight: bold;
+    float: right;
 }
 
-
-.userVK .userInfo .bdate{
-   display: inline-block;
-   width: 150px; 
+.userVK input[type='button']:hover{
+    color: #050a44;
 }
-
-.userVK .userInfo .homeTown{
-    width: 250px;
-    display: inline-block; 
-}
-
-.userVK .userInfo .occupation{
-    display: inline-block;
-    width: 150px;
-}
-
-*/
 .userVK .socialNetworks>p{
     display: inline-block;
     margin: 0px 5px;

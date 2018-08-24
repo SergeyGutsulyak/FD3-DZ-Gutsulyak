@@ -146,10 +146,6 @@ class FormAddGroup extends React.PureComponent {
                     value='Добавить'
                     onClick={this.addGroup}
             />
-            <input type='button'
-                    value='Тестовая'
-                    onClick={this.test}
-            />
         </div>
       )};    
   };
@@ -160,4 +156,4 @@ class FormAddGroup extends React.PureComponent {
    };
  };
  
-export default connect(mapStateToProps)(withRouter(FormAddGroup));
+export default connect(mapStateToProps)(FormAddGroup);

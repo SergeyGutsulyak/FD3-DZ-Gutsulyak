@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import {IndexLink, NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {change_users_page} from '../redux/usersAC';
 
@@ -13,9 +13,10 @@ class PagesLinks extends React.Component {
 
     return (
       <div>
-        <NavLink to="/" exact className="PageLink" activeClassName="ActivePageLink">Группы</NavLink>
-        <NavLink to={'/users/'+this.props.groups.currentGroup+'/1'} className="PageLink" activeClassName="ActivePageLink">Пользователи</NavLink>
-        <NavLink to="/control" className="PageLink" activeClassName="ActivePageLink">Управление</NavLink>
+        <NavLink to="/" exact className="PageLink" activeClassName="ActivePageLink" >Группы</NavLink>
+        {/* <IndexLink to="/" exact className="PageLink" activeClassName="ActivePageLink" >Группы</IndexLink>  */}
+        <NavLink to={'/users/'+this.props.groups.currentGroup+'/1'} className="PageLink" activeClassName="ActivePageLink" >Пользователи</NavLink>
+        <NavLink to="/control" className="PageLink" activeClassName="ActivePageLink" >Управление</NavLink>
       </div>
     );
     

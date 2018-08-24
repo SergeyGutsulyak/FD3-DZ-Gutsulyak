@@ -8,6 +8,7 @@ import PagesRouter from './pages/PagesRouter';
 import PagesLinks from './pages/PagesLinks';
 
 import './css/reset.css';
+import './css/main.css';
 
 
 import { Provider } from 'react-redux';

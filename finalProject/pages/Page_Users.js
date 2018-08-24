@@ -27,8 +27,12 @@ class Page_Users extends React.PureComponent {
 
 
   componentWillMount(){
-    console.log('Событие componentWillMount  Page_Users');
+    //console.log('Событие componentWillMount  Page_Users');
     //console.log(this.props.match)
+    if (this.props.match.params.idGroup==0){
+      this.props.dispatch(groups_change_current(0));
+      return
+    }
     this.props.dispatch(change_users_dataready(false));
     this.getAjaxData.setBody({'idGroup':this.props.match.params.idGroup});
     this.getAjaxData.loadData();
@@ -36,7 +40,7 @@ class Page_Users extends React.PureComponent {
     
  }
  componentWillReceiveProps(newProps){
-  console.log('Событие componentWillReceiveProps Page_Users');
+  //console.log('Событие componentWillReceiveProps Page_Users');
   //this.getAjaxData.setBody({'idGroup':this.props.match.params.idGroup})
   //this.getAjaxData.loadData();
   this.props.dispatch(change_users_page(1));
