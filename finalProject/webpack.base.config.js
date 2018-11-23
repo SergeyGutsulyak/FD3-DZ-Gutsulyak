@@ -14,7 +14,7 @@ const extractLess = new ExtractTextPlugin({
 });
 
 export default new Config().merge({
-  entry: ["babel-polyfill",'./App.js'],
+  entry: ["babel-polyfill",'./App.jsx'],
   output: {
     path: __dirname + '/public',
     publicPath:'/',

@@ -1,0 +1,14 @@
+<div class="pict-post">
+  <figure>
+    <img [src]="getMediumImageUrl()" height="400" >
+  </figure>
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <ul>
+       <li *ngFor="let index of getIndexArray()" [class.Active]="checkCurrent(index)">
+          <img [src]="getSmallImageUrl(index)" (click)="selectImage(index)">
+       </li> 
+      </ul>
+    </div>
+  </div>
+</div>
